@@ -30,6 +30,8 @@ sudo chmod 755 kubebuilder/bin/kubelet
 
 ## 3. Install Container Runtime
 ```bash
+# Remove any existing containerd installation to avoid conflicts
+sudo apt remove moby-containerd -y
 # Download and install containerd
 wget https://github.com/containerd/containerd/releases/download/v2.0.5/containerd-static-2.0.5-linux-amd64.tar.gz -O /tmp/containerd.tar.gz
 sudo tar zxf /tmp/containerd.tar.gz -C /opt/cni/
@@ -79,7 +81,7 @@ sudo cp /tmp/ca.crt /var/lib/kubelet/pki/ca.crt
 ```bash
 sudo kubebuilder/bin/kubectl config set-credentials test-user --token=1234567890
 sudo kubebuilder/bin/kubectl config set-cluster test-env --server=https://127.0.0.1:6443 --insecure-skip-tls-verify
-sudo kubebuilder/bin/kubectl config set-context test-context --cluster=test-env --user=test-user --namespace=default 
+sudo kubebuilder/bin/kubectl config set-context test-context --cluster=test-env --user=test-user --namespace=default
 sudo kubebuilder/bin/kubectl config use-context test-context
 ```
 
@@ -194,7 +196,6 @@ sudo kubebuilder/bin/kube-apiserver \
     --storage-backend=etcd3 \
     --storage-media-type=application/json \
     --v=0 \
-    --cloud-provider=external \
     --service-account-issuer=https://kubernetes.default.svc.cluster.local \
     --service-account-key-file=/tmp/sa.pub \
     --service-account-signing-key-file=/tmp/sa.key &
@@ -237,7 +238,6 @@ sudo PATH=$PATH:/opt/cni/bin:/usr/sbin kubebuilder/bin/kubelet \
     --hostname-override=$(hostname) \
     --pod-infra-container-image=registry.k8s.io/pause:3.10 \
     --node-ip=$HOST_IP \
-    --cloud-provider=external \
     --cgroup-driver=cgroupfs \
     --max-pods=4  \
     --v=1 &
@@ -254,7 +254,6 @@ sudo kubebuilder/bin/kubectl label node "$NODE_NAME" node-role.kubernetes.io/mas
 sudo PATH=$PATH:/opt/cni/bin:/usr/sbin kubebuilder/bin/kube-controller-manager \
     --kubeconfig=/var/lib/kubelet/kubeconfig \
     --leader-elect=false \
-    --cloud-provider=external \
     --service-cluster-ip-range=10.0.0.0/24 \
     --cluster-name=kubernetes \
     --root-ca-file=/var/lib/kubelet/ca.crt \
@@ -274,7 +273,7 @@ sudo kubebuilder/bin/kubectl get componentstatuses
 # Check API server health
 sudo kubebuilder/bin/kubectl get --raw='/readyz?verbose'
 
-# Create Deployment 
+# Create Deployment
 sudo  kubebuilder/bin/kubectl create deploy demo --image nginx
 
 # Check all resources
