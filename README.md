@@ -32,6 +32,8 @@ sudo chmod 755 kubebuilder/bin/kubelet
 ```bash
 # Remove any existing containerd installation to avoid conflicts
 sudo apt remove moby-containerd -y
+# Stop any running
+sudo pkill containerd
 # Download and install containerd
 wget https://github.com/containerd/containerd/releases/download/v2.0.5/containerd-static-2.0.5-linux-amd64.tar.gz -O /tmp/containerd.tar.gz
 sudo tar zxf /tmp/containerd.tar.gz -C /opt/cni/

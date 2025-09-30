@@ -62,7 +62,8 @@ download_components() {
         sudo mkdir -p /opt/cni
         echo "Removing any existing containerd installation to avoid conflicts..."
         sudo apt remove moby-containerd -y
-
+        echo "Stop any running containerd..."
+        sudo pkill containerd
         echo "Installing containerd..."
         wget https://github.com/containerd/containerd/releases/download/v2.0.5/containerd-static-2.0.5-linux-amd64.tar.gz -O /tmp/containerd.tar.gz
         sudo tar zxf /tmp/containerd.tar.gz -C /opt/cni/
