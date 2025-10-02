@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: etcd
+  namespace: kube-system
+spec:
+  hostNetwork: true
+  containers:
+    - name: etcd
+      image: k8s.gcr.io/etcd:v3.5.13
+      command:
+        - etcd
+      args:
+        - --advertise-client-urls=http://127.0.0.1:2379
+        - --listen-client-urls=http://0.0.0.0:2379
+        - --data-dir=./etcd
+        - --listen-peer-urls=http://0.0.0.0:2380
+        - --initial-cluster=default=http://127.0.0.1:2380
+        - --initial-advertise-peer-urls=http://127.0.0.1:2380
+        - --initial-cluster-state=new
+        - --initial-cluster-token=test-token
