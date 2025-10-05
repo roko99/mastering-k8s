@@ -261,6 +261,7 @@ start() {
             --authorization-mode=AlwaysAllow \
             --token-auth-file=/tmp/token.csv \
             --enable-priority-and-fairness=false \
+            --cloud-provider=external \
             --allow-privileged=true \
             --profiling=false \
             --storage-backend=etcd3 \
@@ -308,8 +309,9 @@ start() {
             --hostname-override=$(hostname) \
             --pod-infra-container-image=registry.k8s.io/pause:3.10 \
             --node-ip=$HOST_IP \
+            --cloud-provider=external \
             --cgroup-driver=cgroupfs \
-            --max-pods=4  \
+            --max-pods=10  \
             --v=1 &
     fi
 
@@ -327,6 +329,7 @@ start() {
             --root-ca-file=/var/lib/kubelet/ca.crt \
             --service-account-private-key-file=/tmp/sa.key \
             --use-service-account-credentials=true \
+            --cloud-provider=external \
             --v=2 &
     fi
 
