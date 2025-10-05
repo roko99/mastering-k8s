@@ -312,7 +312,6 @@ start() {
             --cloud-provider=external \
             --cgroup-driver=cgroupfs \
             --max-pods=10  \
-            --hostname-override="instance-20251005-124617" \
             --v=1 &
     fi
 
