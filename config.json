@@ -1,0 +1,26 @@
+{
+  "computeMetadata": {
+    "v1": {
+      "instance": {
+        "id": 6427564478741600000,
+        "serviceAccounts": {
+          "default": {
+            "aliases": [
+              "default"
+            ],
+            "email": "285650823313-compute@developer.gserviceaccount.com",
+            "scopes": [
+              "https://www.googleapis.com/auth/cloud-platform",
+              "https://www.googleapis.com/auth/userinfo.email"
+            ]
+          }
+        }
+      },
+      "oslogin": {},
+      "project": {
+        "numericProjectId": 285650823313,
+        "projectId": "confident-trail-208414"
+      }
+    }
+  }
+}
