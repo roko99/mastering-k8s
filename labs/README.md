@@ -16,3 +16,20 @@ sudo PATH=$PATH:/opt/cni/bin:/usr/sbin kubebuilder/bin/kubelet \
     --max-pods=10  \
     --v=1 &
 ```
+
+### Advanced Level
+
+Run debug pod with privileged permissions
+```bash
+kubectl debug --profile=sysadmin -it node/${HOSTNAME} --image verizondigital/kubectl-flame:v0.2.4-perf -- /bin/sh
+```
+
+Profile kube-apiserver process
+```bash
+./app/perf record -F 99 -g -p $(pgrep kube-apiserver)
+```
+
+Create flame graph from recorded perf data
+```bash
+./app/perf script | FlameGraph/stackcollapse-perf.pl | FlameGraph/flamegraph.pl > flame.svg
+```
